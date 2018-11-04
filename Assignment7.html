@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+//var car;
+function createCar(){
+	//make all object with what is input
+	var gas_tank = new GasTank(document.forms["carForm"]["MaxFuelCapacity"].value);
+	var engine = new Engine(document.forms["carForm"]["EngineDesc"].value, document.forms["carForm"]["MilesPerGallon"].value, document.forms["carForm"]["MaxSpeed"].value);
+	car = new Car(document.forms["carForm"]["CarDescription"].value, document.forms["carForm"]["MaxFuelCapacity"].value, engine);
+	car.fillUp();
+	//after create car
+	document.getElementById('part2').innerHTML = car.getDescription();
+    	return false;
+}
+
+function carDriving(){
+	
+	car.drive(document.forms["carDrive"]["milesDrive"].value,document.forms["carDrive"]["xRatio"].value,document.forms["carDrive"]["yRatio"].value);
+	document.getElementById('part3').innerHTML = car.getDescription();
+	return false;
+}
+
+
+//car "class" but prototype becuase javascript
+function Car(overall_descrip, capacity, eng_reference) {
+	var my_GasTank = new GasTank(capacity);
+	var car_descr = overall_descrip;
+	var X = 0;
+	var Y = 0;
+	
+	
+	if(car_descr == ""){
+		car_descr = "Generic car";
+	}
+	
+	if(eng_reference == null){
+		my_Engine = new Engine("",0,0);
+	}
+	
+	this.getDescription = function(){
+		return car_descr + " (engine: " + eng_reference.getDescription() +"), fuel: " + this.getFuelLevel() + "/" + my_GasTank.getCapacity() + " location: (" + X.toFixed(1) + "," + Y.toFixed(1) + ")";
+		
+	};
+	
+	this.getX = function(){
+	    return X;
+	};
+	
+	this.getY = function(){
+		return Y;
+	};
+	
+	this.getFuelLevel = function(){
+		return my_GasTank.getLevel();
+	};
+	
+	this.getMPG = function(){
+		return eng_reference.getMpg();
+	};
+	
+	this.fillUp = function(){
+		my_GasTank.setLevel(my_GasTank.getCapacity());
+	};
+	
+	this.getMaxSpeed = function(){
+		return getMaxSpeed();
+	};
+	
+	this.drive = function(distance, xRatio, yRatio){
+		
+		var slope = 0;			//finding the slope
+		var holder_X = 0;
+		var holder_Y = 0;
+		
+		var possible_Distance = my_GasTank.getLevel() * eng_reference.getMpg();
+		
+		if (possible_Distance < distance){
+			alert("Ran out of gas after only going " + possible_Distance + " miles.");
+		}
+		
+		else{
+			possible_Distance = distance;
+		}
+		
+		if(xRatio != '0'){
+			slope = yRatio / xRatio;
+		}
+		else{
+			slope = 0;
+		}
+		
+		my_GasTank.setLevel(my_GasTank.getLevel() - (possible_Distance / this.getMPG()));
+		
+		if (xRatio >= 0){
+			holder_X = (possible_Distance / (Math.sqrt(1 + (slope *slope)))) + X;
+			holder_Y = ((slope * possible_Distance) / (Math.sqrt(1 + (slope * slope)))) + Y;
+		}
+		
+		else if(xRatio < 0){
+			holder_X = ((-1 * possible_Distance) / (Math.sqrt(1+(slope * slope)))) + X;
+			holder_Y = ((-1 * slope * possible_Distance) / (Math.sqrt(1+(slope * slope)))) + Y;
+		}
+		
+		X = holder_X;
+		Y = holder_Y;
+		
+		return possible_Distance;
+	}
+}
+
+//engine "class" but prototype becuase javascript
+function Engine(eng_number, eng_mile, eng_speed){
+	var description = eng_number;
+	var mpg = eng_mile;
+	var max_speed = eng_speed;
+	
+	if(description == ""){ 
+		description = "Generic engine";
+	}
+	
+	if(mpg < 0){
+		mpg = 0;
+	}
+	
+	if(max_speed < 0){
+		max_speed = 0;
+	}
+	
+	this.getMpg = function(){
+		return mpg;
+	}
+	
+	this.getMaxSpeed = function(){
+		return max_speed;
+	}
+	
+	this.getDescription = function(){
+		var full_Description = description + " (MPG: " + mpg + ", Max speed: " + max_speed +")";
+		return full_Description;
+	}
+}
+
+//gastank "class" but prototype becuase javascript
+function GasTank(inst_capacity){
+	var capacity = inst_capacity;
+	var level = 0;
+	if(capacity < 0){
+		capacity = 0;
+	}
+	
+	this.getCapacity = function(){
+		return capacity;
+	}
+	this.getLevel = function(){
+		return level;
+	}
+	this.setLevel = function(levelIn){
+		level = levelIn;
+		if (level < 0){
+			level = 0;
+		}
+		if (level > capacity){
+			level = capacity;
+		}
+	}
+}
+
+function getFalse(){
+	return true;
+}
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<style>
+body {
+    background-color: skyblue;
+}
+
+h1 {
+    color: maroon;
+    text-align: center;
+}
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+}
+</style>
+
+</head>
+<head>
+<title>John Connolly's Assignment 7</title>
+</head>
+
+
+<body>
+
+<h1>John Connolly's Assignment 7</h1>
+
+<div ng-app="" ng-init="mySwitch=true">
+
+<form name="carForm" onSubmit="return createCar();" action="" method="get">
+<table>
+<tr>
+<td align="right">
+Engine Description: 
+</td>
+<td align="left">
+<input type="text" name="EngineDesc" value="Generic Engine" required>
+</td></tr>
+
+<tr>
+<td align="right">
+Miles Per Gallon: 
+</td>
+<td align="left">
+<input type="number" step="0.001" name="MilesPerGallon" value="10" min="0.000" required>
+</td></tr>
+
+<tr>
+<td align="right">
+Max Speed: 
+</td>
+<td align="left">
+<input type="number" step="0.001" name="MaxSpeed" value="120" min="0.000" required>
+</td></tr>
+
+<tr>
+<td align="right">
+Car Description: 
+</td>
+<td align="left">
+<input type="text" name="CarDescription" value="Generic Car" required>
+</td></tr>
+
+<tr>
+<td align="right">
+Max Fuel Capacity:
+</td> 
+<td align="left">
+<input type="number" step="0.001" name="MaxFuelCapacity" value="100" min="0.000" required>
+</td></tr>
+</table>
+
+<input type="submit" onSubmit="return createCar()" value="Create Car" ng-click="mySwitch=false">
+
+</form>
+
+<p id="part2"></p>
+
+
+<form ng-hide="mySwitch" name="carDrive" onSubmit="return createCar();" action="" method="get">
+	<table>
+	<tr>
+	<td align="right">
+	Miles to Drive: 
+	</td>
+	<td align="left">
+	<input type="number" step="0.001" name="milesDrive" value="100" min="0.000" required>
+	</td></tr>
+
+	<tr>
+	<td align="right">
+	x Ratio: 
+	</td>
+	<td align="left">
+	<input type="number" step="0.001" name="xRatio" value="1.000" required>
+	</td></tr>
+	
+	<tr>
+	<td align="right">
+	y Ratio: 
+	</td>
+	<td align="left">
+	<input type="number" step="0.001" name="yRatio" value="1.000" required>
+	</td></tr>
+	</table>
+	<input type="submit" value="Drive the Car" onClick="return carDriving();">
+</form>
+</div> 
+
+
+<p id="part3"></p>
+
+ 
+
+</body>
+</html>
+

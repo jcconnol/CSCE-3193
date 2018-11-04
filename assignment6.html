@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {
+    background-color: lightblue;
+}
+
+h1 {
+    color: orange;
+    text-align: center;
+}
+
+.button {
+    border: none;
+    color: black;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.resetbutton {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.resetbutton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.resetbutton span:after {
+  content: '>>';
+  display: inline-block;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.resetbutton:hover span {
+  padding-right: 40px;
+}
+
+.resetbutton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+</style>
+<head>
+<title>John Connolly's Page</title>
+</head>
+
+<body style="background-color:AquaMarine;">
+
+<h1>John Connolly's Page</h1>
+
+<p><a href="https://en.wikipedia.org/wiki/Adenosine_triphosphate" target="_blank">ATP</a>
+ is a very important molecule for energy production in all known cells. This is because of the high energy covalent bonds between the phosphate portion of the molecule. ATP is known as the "energy currency" of the cell. These bonds are known as phosphoanhydride bonds and are what give the molecule high energy content. The breaking of these bonds between the phosphate molecules fuels all sorts of biological functions including powering usually unfavorable but needed chemical reactions and change the conformation of enzymes. It also plays a role in many biological cycles including glycolysis. The phosphorylation of other molecules by ATP allows for certain signal transductions and inhibitions in some signaling pathways. It is also used by plants and is sythesized by photosythesis in a process called photophosphorylation.
+</p>
+
+
+
+
+<p>
+<ins>Question 1:</ins> What does "ATP" stand for in a biological context?
+</p>
+
+<p>
+<a class="button" onclick="document.getElementById('Answer1').innerHTML = 'Incorrect!'" style="text-indent: 2.5em;">A) All Those People</a></p>
+<p><a class="button" onclick="document.getElementById('Answer1').innerHTML = 'Incorrect!'" style="text-indent: 2.5em;">B) Alanine Tetraprosphorous</a></p>
+<p><a class="button" onclick="document.getElementById('Answer1').innerHTML = 'Correct!'" style="text-indent: 2.5em;">C) Adenosine Triphosphate</a></p>
+<p>
+<p id="Answer1"></p>
+
+<br>
+
+<p>
+<ins>Question 2:</ins> When ATP is hydrolyzed one time in the cell it turns into what molecule?
+</p>
+
+<p><a class="button" onclick="document.getElementById('Answer2').innerHTML = 'Correct!'" style="text-indent: 2.5em;">A) ADP</a></p>
+<p><a class="button" onclick="document.getElementById('Answer2').innerHTML = 'Incorrect!'" style="text-indent: 2.5em;">B) NADPH</a></p>
+<p><a class="button" onclick="document.getElementById('Answer2').innerHTML = 'Incorrect!'" style="text-indent: 2.5em;">C) AMP</a></p>
+<p id="Answer2"></p>
+
+<br>
+
+<p>
+<ins>Question 3:</ins> what is the structure of fully hydrolyzed ATP? </p>
+<p style="text-indent: 2.5em; float: left;">A) </p>
+<p>
+<a class="button" onclick="document.getElementById('Answer3').innerHTML = 'Incorrect!'" style="text-indent: 2.5em;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Adenosindiphosphat_protoniert.svg/2000px-Adenosindiphosphat_protoniert.svg.png" style="float: left;" height="160" width="275">
+</a>
+</p>
+
+<br><br><br><br><br><br><br><br>
+
+<p style="text-indent: 2.5em; float: left;">B) </p>
+<p>
+<a class="button" onclick="document.getElementById('Answer3').innerHTML = 'Incorrect!'" style="float: left;"> 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Adenosintriphosphat_protoniert.svg/2000px-Adenosintriphosphat_protoniert.svg.png" style="float: left;" height="160" width="300">
+</a>
+</p>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<p style="text-indent: 2.5em; float: left;">C) </p>
+<p><a class="button" onclick="document.getElementById('Answer3').innerHTML = 'Correct! AMP is the fully dephosphoralated version of ATP.'" style="float: left;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Adenosinmonophosphat_protoniert.svg/200px-Adenosinmonophosphat_protoniert.svg.png" style="float: left;" height="160" width="275">
+</a>
+</p>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<p id="Answer3"></p>
+
+<button class="resetbutton"
+onclick="document.getElementById('Answer3').innerHTML=null;document.getElementById('Answer2').innerHTML=null;document.getElementById('Answer1').innerHTML=null" 
+style="float: right;width:200px;height:200px"><span>Reset</span></button>
+
+</body>
+</html>
